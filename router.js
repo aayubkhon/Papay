@@ -1,17 +1,13 @@
 const express = require("express")
 const router = express.Router()
+const memberController = require('./controllers/memberController')
 
+// memberga daxldor routerlar
 
-router.get("/", ( req,res)=>{
-   res.send("home sahifasidasiz")
-})
+router.get("/", memberController.home)
+router.post("/signup", memberController.signup)
+router.post("/login", memberController.login)
+router.get("/logout", memberController.logout)
 
-router.get("/menu", (req,res)=>{
-   res.send("menu sahifasidasiz")
-})
-
-router.get("/community", (req,res)=>{
-   res.send("Jamiyat sahifasidasiz")
-})
 
 module.exports = router
