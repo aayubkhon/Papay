@@ -15,7 +15,8 @@ app.set("view engine", "ejs");
 
 // 4 Routing code
 
-app.use("/", router);
+// app.use("/resto", router_bssr); // ananaviy yol
+app.use("/", router);  /// rest ap i React
 // Post malumotni ozi bilan birga olip keladi va Date base ga yozadi
 
 module.exports = app;
