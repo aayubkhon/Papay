@@ -13,9 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 app.set("views", "views");
 app.set("view engine", "ejs");
 
-// 4 Routing code
-
-app.use("/", router);
+// 4 Routing coded
+// app.use("/resto", router_bssr); // ananaviy yol admin bilan ishlaydi 
+app.use("/", router);  /// rest ap i React frontend bilan ishlaydi
 // Post malumotni ozi bilan birga olip keladi va Date base ga yozadi
 
 module.exports = app;
