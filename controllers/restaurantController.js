@@ -2,6 +2,17 @@ const Member = require("../models/Member");
 
 let restaurantController = module.exports;
 
+restaurantController.getMyRestaurantData = async (req, res) => {
+  try {
+    console.log("GET: cont/getMyRestaurantData");
+    // TODO Get my restaurant products
+    res.render("restaurant-menu");
+  } catch (err) {
+    console.log(`ERROR, cont/getMyRestaurantData, ${err.message} `);
+    res.json({ state: "fail", message: err.message });
+  }
+};
+
 restaurantController.getSignupMyRestaurant = async (req, res) => {
   try {
     console.log("GET: cont/getSignupMyRestaurant");
@@ -17,7 +28,10 @@ restaurantController.signupProcess = async (req, res) => {
     const data = req.body,
       member = new Member(),
       new_member = await member.signupDate(data);
-    res.json({ state: "succses", data: new_member });
+
+    req.session.member = new_member;
+    res.redirect("/resto/product/menu");
+    // SESSION
   } catch (err) {
     console.log(`ERROR: cont/signupProcess,${err.message}`);
     res.json({ state: "fail", message: err.message });
@@ -40,7 +54,11 @@ restaurantController.loginProcess = async (req, res) => {
     const data = req.body,
       member = new Member(),
       result = await member.loginData(data);
-    res.json({ state: "succeed", data: result });
+
+    req.session.member = result;
+    req.session.save(function () {
+      res.redirect("/resto/product/menu");
+    });
   } catch (err) {
     res.json({ state: "fail", message: err.message });
     console.log(`ERROR, cont/login, ${err.message} `);
@@ -50,4 +68,12 @@ restaurantController.loginProcess = async (req, res) => {
 restaurantController.logout = (req, res) => {
   console.log("GET cont.logout");
   res.send("we are in logout page");
+};
+
+restaurantController.checkSessions = (req, res) => {
+  if (req.session?.member) {
+    res.json({ state: "succsed", data: req.session.member });
+  } else {
+    res.json({ state: "fail", message: "You ara not authenticated" });
+  }
 };
