@@ -9,7 +9,7 @@ function getTargetImageStorage(address) {
     },
     filename: (req, file, cb) => {
       console.log(file);
-      const extension = path.parse(file.originalname).ext; //ext bu originalnamedagi .jpeg extentionni olib beradi.
+      const extension = path.parse(file.originalname).ext; //ext bu original namedagi .jpeg extentionni olib beradi.
       const random_name = uuid.v4() + extension;
       cb(null, random_name);
     },

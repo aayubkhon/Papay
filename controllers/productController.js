@@ -28,4 +28,3 @@ productController.updateChosenProduct = async (req, res) => {
   }
 };
 
-

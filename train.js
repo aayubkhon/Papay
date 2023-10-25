@@ -1,12 +1,29 @@
-// 📌  I-Task: arrayning ichidagi 0 index qiymatni arrayning oxiriga qoyib return qilsin
+// let productController = module.exports;
 
+// productController.getAllProducts = async (req, res) => {
+//   try {
+//     console.log("GET: cont/getAllProducts");
+//   } catch (err) {
+//     console.log(`ERROR, cont/getAllProducts, ${err.message} `);
+//     res.json({ state: "fail", message: err.message });
+//   }
+// };
 
-// const MoveElement = (smt) =>{
-//    smt.push(smt[0])
-//    smt.shift(smt[0])
-//    return smt
-// }
+// productController.addNewProduct = async (req, res) => {
+//   try {
+//     console.log("POST: cont/addNewProduct");
 
+//     //TODO: creation develop
+//     res.send("ok");
+//   } catch (err) {
+//     console.log(`ERROR, cont/addNewProduct, ${err.message} `);
+//   }
+// };
 
-
-// console.log(MoveElement([1,2,3,4,5]));
+// productController.updateChosenProduct = async (req, res) => {
+//   try {
+//     console.log("POST: cont/updateChosenProduct");
+//   } catch (err) {
+//     console.log(`ERROR, cont/updateChosenProduct, ${err.message} `);
+//   }
+// };
