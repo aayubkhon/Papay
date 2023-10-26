@@ -1,4 +1,3 @@
-const { exec } = require("child_process");
 const { shapeIntoMongooseObjectId } = require("../lib/config");
 const Definer = require("../lib/mistake");
 const ProductModel = require("../schema/product.model");

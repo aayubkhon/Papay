@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema(
         message: "{VALUE} is among permitted enum values",
       },
     },
-    product_prise: {
+    product_price: {
       type: Number,
       required: true,
     },
