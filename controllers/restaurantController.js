@@ -3,23 +3,22 @@ const Product = require("../models/Product");
 
 let restaurantController = module.exports;
 
-
-restaurantController.home = (req,res) =>{
-  try{
+restaurantController.home = (req, res) => {
+  try {
     console.log("GET: cont/home");
-    res.render("home-page")
-  }catch(err){
+    res.render("home-page");
+  } catch (err) {
     console.log(`ERROR, cont/home, ${err.message} `);
     res.json({ state: "fail", message: err.message });
   }
-}
+};
 
 restaurantController.getMyRestauranProduct = async (req, res) => {
   try {
     console.log("GET: cont/getMyRestauranProduct");
     // TODO Get my restaurant products
     const product = new Product();
-    const data = await product.getAllProductsDataResto(res.locals.member);
+    const data = await product.getAllProductsDataResto(req.member);
     res.render("restaurant-menu", { restaurant_data: data });
   } catch (err) {
     console.log(`ERROR, cont/getMyRestauranProduct, ${err.message} `);
@@ -64,18 +63,20 @@ restaurantController.getLoginMyRestaurant = async (req, res) => {
 
 restaurantController.loginProcess = async (req, res) => {
   try {
-    console.log("POST: cont/login");
+    console.log("POST: cont/loginProcess");
     const data = req.body,
       member = new Member(),
       result = await member.loginData(data);
 
     req.session.member = result;
     req.session.save(function () {
-      res.redirect("/resto/products/menu");
+      result.mb_type === "ADMIN"
+        ? res.redirect("/resto/all-restaurant")
+        : res.redirect("/resto/products/menu");
     });
   } catch (err) {
     res.json({ state: "fail", message: err.message });
-    console.log(`ERROR, cont/login, ${err.message} `);
+    console.log(`ERROR, cont/loginProcess, ${err.message} `);
   }
 };
 
