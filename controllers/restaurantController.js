@@ -40,7 +40,7 @@ restaurantController.getSignupMyRestaurant = async (req, res) => {
 restaurantController.signupProcess = async (req, res) => {
   try {
     console.log("POST: cont/signupProcess");
-    assert("req.file", req.file, Definer.general_err3); // file dep yozsek single boladi files yozsek kopkina boladi;
+    assert.ok("req.file", req.file, Definer.general_err3); // file dep yozsek single boladi files yozsek kopkina boladi;
 
     let new_member = req.body;
     new_member.mb_type = "RESTAURANT";
@@ -89,8 +89,15 @@ restaurantController.loginProcess = async (req, res) => {
 };
 
 restaurantController.logout = (req, res) => {
-  console.log("GET cont.logout");
-  res.send("we are in logout page");
+  console.log("GET cont/logout");
+  try {
+    req.session.destroy(function(){
+      res.redirect("/resto")
+    })
+  } catch (err) {
+    res.json({ state: "fail", message: err.message });
+    console.log(`ERROR, cont/cont/logout, ${err.message} `);
+  }
 };
 
 restaurantController.validateAuthRestaurant = (req, res, next) => {

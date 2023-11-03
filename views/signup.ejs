@@ -113,6 +113,7 @@
     fileTarget.on("change", function () {
       if (window.FileReader) {
         const uploading_file = $(this)[0].files[0];
+        console.log("javob",uploading_file);
         const fileType = uploading_file["type"];
         const validImagestype = ["image/jpg", "image/jpeg", "image/png"];
         if (!validImagestype.includes(fileType)) {
