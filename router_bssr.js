@@ -8,7 +8,7 @@ const uploader_memeber = require("./utils/upload-multer")("members");
 /********************
  *     BSSR EJS     *
  ********************/
-
+ 
 router_bssr.get("/", restaurantController.home);
 
 router_bssr
