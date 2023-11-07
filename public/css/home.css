@@ -9,7 +9,7 @@ body {
 }
 .group_name {
   position: absolute;
-  z-index: 10000;
+  z-index: 100;
   top: 1%;
   color: #efefee;
   font-size: xx-large;
@@ -17,7 +17,7 @@ body {
 }
 
 .animation-wrapper {
-  width: 40%;
+  width: 45%;
   padding-bottom: 50%;
 }
 
