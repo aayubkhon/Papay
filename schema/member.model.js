@@ -31,7 +31,7 @@ const memberSchema = new mongoose.Schema(
         message: "{VALUE} is not among prmitted lues",
       },
     },
-    mb_staus: {
+    mb_status: {
       type: String,
       required: false,
       default: "ACTIVE",
