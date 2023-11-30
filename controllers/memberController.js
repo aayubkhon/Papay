@@ -14,6 +14,13 @@ memberController.signup = async (req, res) => {
       new_member = await member.signupDate(data);
 
     // TODO AUTHENTICATE BASED ON JWT
+    const token = memberController.createTooken(new_member);
+
+    res.cookie("accsess_token", token, {
+      maxAge: 6 * 3600 * 1000,
+      httpOnly: true,
+    });
+
     res.json({ state: "succses", data: new_member });
   } catch (err) {
     console.log(`ERROR: cont/signup,${err.message}`);
@@ -27,12 +34,10 @@ memberController.login = async (req, res) => {
     const data = req.body,
       member = new Member(),
       result = await member.loginData(data);
-    console.log("result:", result);
 
     // TODO AUTHENTICATE BASED ON JWT
 
     const token = memberController.createTooken(result);
-    console.log("token:", token);
 
     res.cookie("accsess_token", token, {
       maxAge: 6 * 3600 * 1000,
@@ -47,7 +52,7 @@ memberController.login = async (req, res) => {
 };
 
 memberController.logout = (req, res) => {
-  console.log("GET cont.logout");
+  console.log("GET cont/logout");
   res.send("logout sahifasidasiz");
 };
 
@@ -63,6 +68,20 @@ memberController.createTooken = (result) => {
     });
     assert.ok(token, Definer.auth_err4);
     return token;
+  } catch (err) {
+    throw err;
+  }
+};
+
+memberController.checkMyAuthentication = (req, res) => {
+  try {
+    console.log("GET cont/locheckMyAuthenticationgout");
+    let token = req.cookies["accsess_token"];
+    console.log("token", token);
+    const member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
+    assert.ok(token, Definer.auth_err4);
+
+    res.json({ state: "succses", data: member });
   } catch (err) {
     throw err;
   }
