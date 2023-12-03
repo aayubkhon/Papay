@@ -6,12 +6,19 @@ let productController = module.exports;
 // bu variablesga functionlarni yuklaymiz
 productController.getAllProducts = async (req, res) => {
   try {
-    console.log("GET: cont/getAllProducts");
+    console.log("POST: cont/getAllProducts");
+    const product = new Product();
+    const result = await product.getAllProductsData(req.member, req.body);
+    res.json({ state: "succsed", data: result });
   } catch (err) {
     console.log(`ERROR, cont/getAllProducts, ${err.message} `);
     res.json({ state: "fail", message: err.message });
   }
 };
+
+/****************************************
+ *     BSSR RELEATED METHODS       *
+ ****************************************/
 
 productController.addNewProduct = async (req, res) => {
   try {

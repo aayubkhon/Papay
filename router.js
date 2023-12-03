@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const memberController = require("./controllers/memberController");
+const productController = require("./controllers/productController");
 
 /****************************
  *         REST API/       *
  ***************************/
 
-// memberga daxldor routerlar
+// Member related routers
 
 router.post("/signup", memberController.signup);
 router.post("/login", memberController.login);
@@ -16,6 +17,14 @@ router.get(
   "/member/:id",
   memberController.retrieveAuthMember,
   memberController.getChosenMember
+);
+
+// Product related routers
+
+router.post(
+  "/products",
+  memberController.retrieveAuthMember,
+  productController.getAllProducts
 );
 
 module.exports = router;
