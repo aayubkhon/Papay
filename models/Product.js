@@ -13,7 +13,7 @@ class Product {
       const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
       let match = { product_status: "PROCESS" };
       if (data.restaurant_mb_id) {
-        match["restauratnt_mb_id"] = shapeIntoMongooseObjectId(
+        match["restaurant_mb_id"] = shapeIntoMongooseObjectId(
           data.restaurant_mb_id
         );
         match["product_collection"] = data.product_collection;
