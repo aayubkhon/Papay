@@ -39,7 +39,7 @@ memberController.login = async (req, res) => {
 
     const token = memberController.createTooken(result);
 
-    res.cookie("accsess_token", token, {
+    res.cookie("access_token", token, {
       maxAge: 6 * 3600 * 1000,
       httpOnly: true,
     });
@@ -54,7 +54,7 @@ memberController.login = async (req, res) => {
 memberController.logout = (req, res) => {
   console.log("GET cont/logout");
   res.cookie("access_token", null, { maxAge: 0, httpOnly: true });
-  res.json({ state: "succses", data: "logout succsessfully!" });
+  res.json({ state: "succeed", data: "logout_succsessfully" });
 };
 
 memberController.createTooken = (result) => {
@@ -76,11 +76,11 @@ memberController.createTooken = (result) => {
 
 memberController.checkMyAuthentication = (req, res) => {
   try {
-    console.log("GET cont/locheckMyAuthenticationgout");
-    let token = req.cookies["accsess_token"];
+    console.log("GET cont/checkMyAuthentication ");
+    let token = req.cookies["access_token"];
     console.log("token", token);
     const member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
-    assert.ok(token, Definer.auth_err4);
+    assert.ok(member, Definer.auth_err4);
 
     res.json({ state: "succses", data: member });
   } catch (err) {
@@ -108,6 +108,6 @@ memberController.retrieveAuthMember = (req, res, next) => {
     next();
   } catch (err) {
     console.log(`ERROR: cont/retrieveAuthMember,${err.message}`);
-    next();
+    next()
   }
 };

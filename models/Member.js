@@ -3,6 +3,7 @@ const Definer = require("../lib/mistake");
 const MemberModel = require("../schema/member.model");
 const assert = require("assert");
 const bcrypt = require("bcrypt");
+const View = require("./View");
 class Member {
   constructor() {
     this.memberModel = MemberModel;
@@ -47,12 +48,13 @@ class Member {
       throw err;
     }
   }
-  async getChosenMemberData(member,id) {
+  async getChosenMemberData(member, id) {
     try {
       id = shapeIntoMongooseObjectId(id);
-      console.log("member:::",member);
-      if(member){
+      console.log("member:::", member);
+      if (member) {
         // condition if not seen befofe
+        await this.viewChosenItemByMember(member, id, "member");
       }
       const result = await this.memberModel
         .aggregate([
@@ -62,6 +64,27 @@ class Member {
         .exec();
       assert.ok(result, Definer.general_err2);
       return result[0];
+    } catch (err) {
+      throw err;
+    }
+  }
+  async viewChosenItemByMember(member, view_ref_id, group_types) {
+    try {
+      view_ref_id = shapeIntoMongooseObjectId(view_ref_id);
+      const mb_id = shapeIntoMongooseObjectId(member._id);
+      const view = new View(mb_id);
+      const isvalid = await view.validateChosenTarget(view_ref_id, group_types);
+      assert.ok(isvalid, Definer.general_err2);
+
+      // logged user has seen target before
+
+      const doesExist = await view.checkViewExistence(view_ref_id);
+      console.log("doesExist:", doesExist);
+      if (!doesExist) {
+        const result = await view.insertMemberView(view_ref_id, group_types);
+        assert.ok(result, Definer.auth_err1);
+      }
+      return true;
     } catch (err) {
       throw err;
     }
