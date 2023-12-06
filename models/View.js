@@ -72,7 +72,7 @@ class View {
               {
                 _id: view_ref_id,
               },
-              { $inc: { product_views: 1 } } 
+              { $inc: { product_views: 1 } }
             )
             .exec();
           break;

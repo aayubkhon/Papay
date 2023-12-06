@@ -48,9 +48,9 @@ class Product {
       const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
       id = shapeIntoMongooseObjectId(id);
 
-      if(member) {
-       const  member_obj = new Member()
-       member_obj.viewChosenItemByMember(member,id,"product")
+      if (member) {
+        const member_obj = new Member();
+        member_obj.viewChosenItemByMember(member, id, "product");
       }
       const result = await this.productModel
         .aggregate([
@@ -58,8 +58,8 @@ class Product {
           // TODO  check auth member product likes,
         ])
         .exec();
-        assert.ok(result,Definer.general_err1)
-        return result
+      assert.ok(result, Definer.general_err1);
+      return result;
     } catch (err) {
       throw err;
     }
