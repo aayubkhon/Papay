@@ -21,6 +21,19 @@ restaurantController.getRestaurants = async (req, res) => {
   }
 };
 
+restaurantController.getChosenRestaurant = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const restaurant = new Restaurant();
+    const result = await restaurant.getChosenRestaurantData(req.member, id);
+    console.log("GET: cont/getChosenRestaurant");
+    res.json({ state: "success", data: result });
+  } catch (err) {
+    console.log(`ERROR, cont/getChosenRestaurant, ${err.message} `);
+    res.json({ state: "fail", message: err.message });
+  }
+};
+
 /****************************************
  *     BSSR RELEATED METHODS       *
  ****************************************/
