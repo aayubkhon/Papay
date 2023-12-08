@@ -16,6 +16,7 @@ class Restaurant {
       let aggregationQuery = [];
       data.limit = data["limit"] * 1;
       data.page = data["page"] * 1;
+
       switch (data.order) {
         case "top":
           match["mb_top"] = "Y";
