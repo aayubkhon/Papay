@@ -40,12 +40,15 @@ class Community {
           { $sort: { createdAt: -1 } },
           { $skip: (page - 1) * limit },
           { $limit: limit },
-          {$lookup: {
-            from: "members",
-            localField: "mb_id",
-            foreignField: "_id",
-            as: "member_data"
-          }}
+          {
+            $lookup: {
+              from: "members",
+              localField: "mb_id",
+              foreignField: "_id", //members collectionning ichidan qaysi datasetga tenglashtirmoqchisiz. mb_id membersning o'zida _id ga teng
+              as: "member_data", //qaysi nom bilan hosil qilmoqchimiz
+            },
+          },
+          { $unwind: "$member_data" }, //ichida bitta obj data buladigan arrayni objsini olib to'g'ridan to'g'ri
         ])
         .exec();
       assert.ok(result, Definer.article_err2);
