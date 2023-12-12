@@ -28,3 +28,22 @@ communityControler.createArticle = async (req, res) => {
     res.json({ state: "fail", message: err.message });
   }
 };
+
+communityControler.getMemberArticles = async (req, res) => {
+  try {
+    console.log("GET: cont/getMemberArticles");
+    const community = new Community();
+    const mb_id = req.query.mb_id !== "none" ? req.query.mb_id : req.member._id;
+    assert.ok(mb_id, Definer.article_err1);
+    const result = await community.getMemberArticlesData(
+      req.member,
+      mb_id,
+      req.query
+    );
+    assert.ok(result, Definer.general_err3);
+    res.json({ state: "succses", data: result });
+  } catch (err) {
+    console.log(`ERROR: cont/getMemberArticles,${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
+};
