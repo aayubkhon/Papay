@@ -1,4 +1,7 @@
-const { shapeIntoMongooseObjectId } = require("../lib/config");
+const {
+  shapeIntoMongooseObjectId,
+  board_id_enums_list,
+} = require("../lib/config");
 const Definer = require("../lib/mistake");
 const BoArticleModel = require("../schema/bo_article.model");
 const assert = require("assert");
@@ -49,10 +52,47 @@ class Community {
             },
           },
           { $unwind: "$member_data" }, //ichida bitta obj data buladigan arrayni objsini olib to'g'ridan to'g'ri
+          // TODO check auth member liked the chosen member
         ])
         .exec();
       assert.ok(result, Definer.article_err2);
 
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+  async getArticlesData(member, inquery) {
+    try {
+      const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
+      let matches =
+        inquery.bo_id === "all"
+          ? { bo_id: { $in: board_id_enums_list }, art_status: "active" }
+          : { bo_id: inquery.bo_id, art_status: "active" };
+      inquery.limit *= 1;
+      inquery.page *= 1;
+      const sort = inquery.order
+        ? { [`${inquery.order}`]: -1 }
+        : { createdAt: -1 };
+      const result = await this.boArticleModel
+        .aggregate([
+          { $match: matches },
+          { $sort: sort },
+          { $skip: (inquery.page - 1) * inquery.limit },
+          { $limit: inquery.limit },
+          {
+            $lookup: {
+              from: "members",
+              localField: "mb_id",
+              foreignField: "_id", //members collectionning ichidan qaysi datasetga tenglashtirmoqchisiz. mb_id membersning o'zida _id ga teng
+              as: "member_data", //qaysi nom bilan hosil qilmoqchimiz
+            },
+          },
+          { $unwind: "$member_data" }, //ichida bitta obj data buladigan arrayni objsini olib to'g'ridan to'g'ri
+          // TODO check auth member liked the chosen member
+        ])
+        .exec();
+      assert.ok(result, Definer.article_err3);
       return result;
     } catch (err) {
       throw err;
