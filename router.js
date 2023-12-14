@@ -95,4 +95,10 @@ router.get(
   memberController.retrieveAuthMember,
   communityControler.getArticles
 );
+
+router.get(
+  "/community/single-article/:art_id",
+  memberController.retrieveAuthMember,
+  communityControler.getChosenArticle
+);
 module.exports = router;
