@@ -4,15 +4,28 @@ const Community = require("../models/Community");
 const Follow = require("../models/Follow");
 let followController = module.exports;
 
-followController.subsCribe = async (req, res) => {
+followController.subscribe = async (req, res) => {
   try {
-    console.log("POST: cont/subsCribe");
+    console.log("POST: cont/subscribe");
     assert.ok(req.member, Definer.auth_err5);
     const follow = new Follow();
-    await follow.subsCribeData(req.member, req.body);
+    await follow.subscribeData(req.member, req.body);
     res.json({ state: "succses", data: "subscribed" });
   } catch (err) {
-    console.log(`ERROR: cont/subsCribe,${err.message}`);
+    console.log(`ERROR: cont/subscribe,${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
 };
+
+followController.unsubscribe = async(req,res) =>{
+  try {
+    console.log("POST: cont/unsubscribe");
+    assert.ok(req.member, Definer.auth_err5);
+    const follow = new Follow();
+    await follow.unsubscribeData(req.member,req.body);
+    res.json({ state: "succses", data: "unsubscribed" });
+  } catch (err) {
+    console.log(`ERROR: cont/unsubscribe,${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
+}

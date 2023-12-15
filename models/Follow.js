@@ -9,7 +9,7 @@ class Follow {
     this.followModel = FollowModel;
     this.memberModel = MemberModel;
   }
-  async subsCribeData(member, data) {
+  async subscribeData(member, data) {
     try {
       assert.ok(member._id !== data.mb_id, Definer.follow_err1);
       const subscriber_id = shapeIntoMongooseObjectId(member._id);
@@ -26,8 +26,8 @@ class Follow {
       );
       assert.ok(result, Definer.general_err1);
 
-      await this.modifyMemberFollowounts(follow_id, "subscriber_change",1);
-      await this.modifyMemberFollowounts(subscriber_id, "follow_change",1);
+      await this.modifyMemberFollowounts(follow_id, "subscriber_change", 1);
+      await this.modifyMemberFollowounts(subscriber_id, "follow_change", 1);
       return true;
     } catch (err) {
       throw err;
@@ -63,6 +63,24 @@ class Follow {
           )
           .exec();
       }
+      return true;
+    } catch (err) {
+      throw err;
+    }
+  }
+  async unsubscribeData(member, data) {
+    try {
+      const subscribe_id = shapeIntoMongooseObjectId(member._id);
+      const follow_id = shapeIntoMongooseObjectId(data.mb_id);
+      const result = await this.followModel.findOneAndDelete({
+        follow_id: follow_id,
+        subscribe_id: subscribe_id,
+      });
+      assert.ok(result, Definer.general_err1);
+
+      await this.modifyMemberFollowounts(follow_id, "subscriber_change", -1);
+      await this.modifyMemberFollowounts(subscribe_id, "follow_change", -1);
+      return true;
     } catch (err) {
       throw err;
     }
