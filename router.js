@@ -23,6 +23,13 @@ router.get(
   memberController.retrieveAuthMember,
   memberController.getChosenMember
 );
+// Member liked related routers
+
+router.post(
+  "/member-liken",
+  memberController.retrieveAuthMember,
+  memberController.likeMemberChosen
+);
 
 // Product related routers
 
