@@ -1,6 +1,7 @@
 const {
   shapeIntoMongooseObjectId,
   board_id_enums_list,
+  lookup_auth_member_liked,
 } = require("../lib/config");
 const Definer = require("../lib/mistake");
 const BoArticleModel = require("../schema/bo_article.model");
@@ -54,6 +55,7 @@ class Community {
           },
           { $unwind: "$member_data" }, //ichida bitta obj data buladigan arrayni objsini olib to'g'ridan to'g'ri
           // TODO check auth member liked the chosen member
+          lookup_auth_member_liked(auth_mb_id),
         ])
         .exec();
       assert.ok(result, Definer.article_err2);
@@ -91,6 +93,7 @@ class Community {
           },
           { $unwind: "$member_data" }, //ichida bitta obj data buladigan arrayni objsini olib to'g'ridan to'g'ri
           // TODO check auth member liked the chosen member
+          lookup_auth_member_liked(auth_mb_id),
         ])
         .exec();
       assert.ok(result, Definer.article_err3);
