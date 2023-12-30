@@ -40,7 +40,7 @@ const memberSchema = new mongoose.Schema(
         message: "{VALUE} is not among prmitted lues",
       },
     },
-    mb_adress: {
+    mb_address: {
       type: String,
       required: false,
     },
