@@ -21,7 +21,7 @@ memberController.signup = async (req, res) => {
       httpOnly: false,
     });
 
-    res.json({ state: "succses", data: new_member });
+    res.json({ state: "success", data: new_member });
   } catch (err) {
     console.log(`ERROR: cont/signup,${err.message}`);
     res.json({ state: "fail", message: err.message });
@@ -54,7 +54,7 @@ memberController.login = async (req, res) => {
 memberController.logout = (req, res) => {
   console.log("GET cont/logout");
   res.cookie("access_token", null, { maxAge: 0, httpOnly: true });
-  res.json({ state: "success", data: "logout_succsessfully" });
+  res.json({ state: "success", data: "logout_successfully" });
 };
 
 memberController.createTooken = (result) => {

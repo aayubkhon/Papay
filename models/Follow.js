@@ -29,8 +29,8 @@ class Follow {
       );
       assert.ok(result, Definer.general_err1);
 
-      await this.modifyMemberFollowounts(follow_id, "subscriber_change", 1);
-      await this.modifyMemberFollowounts(subscriber_id, "follow_change", 1);
+      await this.modifyMemberFollowCounts(follow_id, "subscriber_change", 1);
+      await this.modifyMemberFollowCounts(subscriber_id, "follow_change", 1);
       return true;
     } catch (err) {
       throw err;
@@ -44,12 +44,12 @@ class Follow {
         subscriber_id: subscriber_id,
       });
       return await new_follow.save();
-    } catch (mongo_err) {
-      console.log(mongo_err);
+    } catch (mongodb_err) {
+      console.log(mongodb_err);
       throw new Error(Definer.follow_err2);
     }
   }
-  async modifyMemberFollowounts(mb_id, type, modifier) {
+  async modifyMemberFollowCounts(mb_id, type, modifier) {
     try {
       if (type === "follow_change") {
         await this.memberModel
@@ -81,18 +81,18 @@ class Follow {
       });
       assert.ok(result, Definer.general_err1);
 
-      await this.modifyMemberFollowounts(follow_id, "subscriber_change", -1);
-      await this.modifyMemberFollowounts(subscribe_id, "follow_change", -1);
+      await this.modifyMemberFollowCounts(follow_id, "subscriber_change", -1);
+      await this.modifyMemberFollowCounts(subscribe_id, "follow_change", -1);
       return true;
     } catch (err) {
       throw err;
     }
   }
-  async getMemberFollowingsData(inquiry) {
+  async getMemberFollowingsData(inquery) {
     try {
-      const subscriber_id = shapeIntoMongooseObjectId(inquiry.mb_id),
-        page = inquiry.page * 1,
-        limit = inquiry.limit * 1;
+      const subscriber_id = shapeIntoMongooseObjectId(inquery.mb_id),
+        page = inquery.page * 1,
+        limit = inquery.limit * 1;
       const result = await this.followModel
         .aggregate([
           { $match: { subscriber_id: subscriber_id } },

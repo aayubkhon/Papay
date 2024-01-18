@@ -11,7 +11,7 @@ orderController.createOrder = async (req, res) => {
     const order = new Order();
     const result = await order.createOrderData(req.member, req.body);
     console.log(req.body);
-    res.json({ state: "succses", data: result });
+    res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR: cont/createOrder,${err.message}`);
     res.json({ state: "fail", message: err.message });
@@ -24,7 +24,7 @@ orderController.getMyOrders = async (req, res) => {
     assert.ok(req.member, Definer.auth_err5);
     const order = new Order();
     const result = await order.getMyOrdersData(req.member, req.query);
-    res.json({ state: "succses", data: result });
+    res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR: cont/getMyOrders,${err.message}`);
     res.json({ state: "fail", message: err.message });
@@ -37,7 +37,7 @@ orderController.editChosenOrder = async (req, res) => {
     assert.ok(req.member, Definer.auth_err5);
     const order = new Order();
     const result = await order.editChosenOrderData(req.member, req.body);
-    res.json({ state: "succses", data: result });
+    res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR: cont/editChosenOrder,${err.message}`);
     res.json({ state: "fail", message: err.message });

@@ -8,7 +8,7 @@ communityControler.imageInsertion = async (req, res) => {
     console.log("POST: cont/imageInsertion");
     assert.ok(req.file, Definer.general_err3);
     const img_url = req.file.path;
-    res.json({ state: "succses", data: img_url });
+    res.json({ state: "success", data: img_url });
   } catch (err) {
     console.log(`ERROR: cont/imageInsertion,${err.message}`);
     res.json({ state: "fail", message: err.message });
@@ -22,7 +22,7 @@ communityControler.createArticle = async (req, res) => {
     const community = new Community();
     const result = await community.createArticleData(req.member, req.body);
     assert.ok(result, Definer.general_err1);
-    res.json({ state: "succses", data: result });
+    res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR: cont/imageInsertion,${err.message}`);
     res.json({ state: "fail", message: err.message });
@@ -42,7 +42,7 @@ communityControler.getMemberArticles = async (req, res) => {
       req.query
     );
     assert.ok(result, Definer.general_err3);
-    res.json({ state: "succses", data: result });
+    res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR: cont/getMemberArticles,${err.message}`);
     res.json({ state: "fail", message: err.message });
@@ -55,7 +55,7 @@ communityControler.getArticles = async (req, res) => {
     const community = new Community();
     const result = await community.getArticlesData(req.member, req.query);
     assert.ok(result, Definer.general_err3);
-    res.json({ state: "succses", data: result });
+    res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR: cont/getArticles,${err.message}`);
     res.json({ state: "fail", message: err.message });
@@ -69,7 +69,7 @@ communityControler.getChosenArticle = async (req, res) => {
     const art_id = req.params.art_id,
       result = await community.getChosenArticleData(req.member, art_id);
     assert.ok(result, Definer.general_err3);
-    res.json({ state: "succses", data: result });
+    res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR: cont/getChosenArticle,${err.message}`);
     res.json({ state: "fail", message: err.message });
